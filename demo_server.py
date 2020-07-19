@@ -7,6 +7,8 @@ address = ('127.0.0.1', 20000)
 server_socket.bind(address)
 server_socket.listen(1)
 
+print ('waiting')
+
 connection, client_address = server_socket.accept()
 
 buffer_size = 4096
