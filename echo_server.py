@@ -68,7 +68,7 @@ def server(log_buffer=sys.stderr):
                     # :)
                     if len(data) < buffer_size:
                         break
-            except Exception as e:
+            except Exception:
                 traceback.print_exc()
                 sys.exit(1)
             finally:
@@ -78,6 +78,7 @@ def server(log_buffer=sys.stderr):
                 print(
                     'echo complete, client connection closed', file=log_buffer
                 )
+                conn.close()
 
     except KeyboardInterrupt:
         # TODO: Use the python KeyboardInterrupt exception as a signal to
