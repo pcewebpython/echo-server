@@ -4,10 +4,11 @@ import traceback
 
 
 def client(msg, log_buffer=sys.stderr):
-    server_address = ('localhost', 10000)
+    server_address = ('127.0.0.1', 10000)
     # TODO: Replace the following line with your code which will instantiate
     #       a TCP socket with IPv4 Addressing, call the socket you make 'sock'
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_IP)
+    sock.connect(server_address)
     print('connecting to {0} port {1}'.format(*server_address), file=log_buffer)
     # TODO: connect your socket to the server here.
 
