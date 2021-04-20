@@ -49,6 +49,7 @@ def client(msg, log_buffer=sys.stderr):
         # TODO: when all is said and done, you should return the entire reply
         # you received from the server as the return value of this function.
         print(received_message)
+        return received_message
 
 
 if __name__ == '__main__':
