@@ -33,11 +33,11 @@ def client(msg, log_buffer=sys.stderr):
         #       do it. This will help in debugging problems
         while True:    
             chunk = sock.recv(buffer_size)
-            if len(chunk) < buffer_size:
-                break
 
             print('received "{0}"'.format(chunk.decode('utf8')), file=log_buffer)
             received_message += chunk.decode('utf8')
+            if len(chunk) < buffer_size:
+                break
     except Exception:
         traceback.print_exc()
         sys.exit(1)
