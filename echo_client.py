@@ -23,6 +23,8 @@ def client(msg, log_buffer=sys.stderr):
         print('sending "{0}"'.format(msg), file=log_buffer)
         # TODO: send your message to the server here.
         my_message = input("> ")
+        if my_message.lower() == "Port Range":
+            port_range_setup()
         sock.sendall(my_message.encode('utf-8'))
         # TODO: the server should be sending you back your message as a series
         #       of 16-byte chunks. Accumulate the chunks you get to build the
@@ -51,6 +53,40 @@ def client(msg, log_buffer=sys.stderr):
         print(received_message)
         return received_message
 
+def port_range(upper, lower):
+    '''
+    lists the services provided by a given range of ports
+    '''
+
+    # Ports numbered 0 - 1023 are reserved
+    # Ports numbered 1024 - 65535 are open
+    # Ports numbered 1024 - 49151 may be registered
+    # Ports numbered 49152 - 65535 are called ephemera
+    if upper is not int or lower is not int:
+        print("Inputs must be integers")
+        return
+
+    if upper < 0 or lower < 0:
+        print("Inputs can not be negative")
+        return
+
+    if upper > 65535 or lower > 65535:
+        print("Inputs must be less than 65535")
+        return
+
+    if lower > upper:
+        place_holder = lower
+        upper = lower
+        lower = place_holder
+
+    pass
+
+def port_range_setup():
+    '''setup inputs for port range'''
+    upper = input('Select an upper limit for port list: ')
+    lower = input('Select a lower limit for port list: ')
+    port_range(upper, lower)
+    return
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
