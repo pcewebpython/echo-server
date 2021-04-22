@@ -25,7 +25,7 @@ def client(msg, log_buffer=sys.stderr):
         my_message = input("> ")
         if my_message.lower() == "port range":
             port_range_setup()
-            print(my_message.lower())
+
         sock.sendall(my_message.encode('utf-8'))
         # TODO: the server should be sending you back your message as a series
         #       of 16-byte chunks. Accumulate the chunks you get to build the
@@ -59,11 +59,6 @@ def port_range(upper, lower):
     lists the services provided by a given range of ports
     '''
 
-    # Ports numbered 0 - 1023 are reserved
-    # Ports numbered 1024 - 65535 are open
-    # Ports numbered 1024 - 49151 may be registered
-    # Ports numbered 49152 - 65535 are called ephemera
-
     if upper < 0 or lower < 0:
         print("Inputs can not be negative")
         return
@@ -78,13 +73,22 @@ def port_range(upper, lower):
         lower = place_holder
         print("Upper = {0}, Lower= {1}".format(upper, lower))
 
-    #Determine Bucket "A"
+    #Determine if Ports are reserved (numbered 0 - 1023)
     if upper < 1023:
         print("These ports are reserved, Do Not Use")
-    #Determine Bucket "B"
-    if upper < 49151:
-        print(upper)
-    #Determine Bucket "C"
+    #Determine if Ports may be registered (numbered 1024 - 49151)
+    elif upper < 49151 and lower < 1024:
+        print("This range contains reserved and registerd ports")
+    elif upper < 49151 and lower > 1023:
+        print("This range contains registerd ports")
+    #Determine if Ports are called ephemera (numbered 49152 - 65535)
+    elif upper < 65535 and lower < 1024:
+        print("This range contains ephemera and reserved ports")
+    elif upper < 65535 and lower < 49152:
+        print("This range contains registerd and ephemera ports")
+    elif upper < 65535 and lower > 49151:
+        print("This range contains ephemera ports")
+
     pass
 
 def port_range_setup():
